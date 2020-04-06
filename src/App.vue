@@ -2,8 +2,11 @@
   <div id="app">
   <app-header></app-header>
   <div class="main">
-    <app-navigation :navItems="tutorials.technologies"></app-navigation>
-    <app-home></app-home>
+    <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies">
+       
+    </app-navigation>
+    
+    <app-home :subjects="subjects"></app-home>
   </div>
     <app-footer></app-footer>
   </div>
@@ -27,8 +30,19 @@ export default {
   },
   data(){
      return{
-        tutorials
+        tutorials,
+        selectedTehnologyIndex:0
      } 
+  },
+  methods:{
+      navigateHandler(index){
+          this.selectedTehnologyIndex=index
+      }
+  },
+  computed:{
+      subjects(){
+          return this.tutorials.technologies[this.selectedTehnologyIndex].subjects;
+      }
   }
 }
 </script>
