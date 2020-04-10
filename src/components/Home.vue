@@ -5,20 +5,9 @@
                  <li v-for="(item,index) of subjects" :key="index">
                      <a>{{item.name}}</a>
                  </li>
-                        <!-- <li>
-                            <a href="#">JS Conditional Statements</a>
-                        </li>
-                        <li>
-                            <a href="#">JS Loops</a>
-                        </li>
-                        <li>
-                            <a href="#">JS Arrays</a>
-                        </li>
-                        <li>
-                            <a href="#">JS Objects</a>
-                        </li> -->
-                    </ul>
+            </ul>
         </template>
+        <template v-slot:info>{{selectedSubject.content}}</template>
     </app-content>
 </template>
 
@@ -33,6 +22,16 @@ props:{
     subjects:{
         type:Array,
         required:true
+    }
+},
+data(){
+    return {
+        selectedSubjectIndex:0
+    }
+},
+computed:{
+    selectedSubject(){
+        return this.subjects[this.selectedSubjectIndex]
     }
 }   
 }

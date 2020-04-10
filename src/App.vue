@@ -2,11 +2,12 @@
   <div id="app">
   <app-header></app-header>
   <div class="main">
-    <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies">
-       
-    </app-navigation>
-    
-    <app-home :subjects="subjects"></app-home>
+    <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies" :selected-index="selectedIndex">
+       </app-navigation>
+       <app-create-book :tehnologies="tutorials.technologies" :subjects="subjects"></app-create-book>
+       <!-- <app-register></app-register> -->
+    <!-- <app-login></app-login> -->
+    <!-- <app-home :subjects="subjects"></app-home>  -->
   </div>
     <app-footer></app-footer>
   </div>
@@ -15,7 +16,10 @@
 <script>
 import tutorials from './tutorials.json';
 
-import AppHome from './components/Home.vue'
+//import AppHome from './components/Home.vue'; 
+//import AppLogin from './components/Login.vue';
+import AppCreateBook from './components/CreateBook.vue';
+//import AppRegister from './components/Register.vue';
 import AppHeader from './components/core/Header.vue';
 import AppFooter from './components/core/Footer.vue';
 import AppNavigation from './components/core/Navigation.vue';
@@ -23,7 +27,10 @@ import AppNavigation from './components/core/Navigation.vue';
 export default {
   name: 'App',
   components: {
-    AppHome,
+    // AppHome,
+    //AppLogin,
+    AppCreateBook,
+    //AppRegister,
     AppHeader,
     AppFooter,
     AppNavigation
@@ -251,7 +258,9 @@ footer .svg-inline--fa {
 .main div.navigation li a:hover {
     text-decoration: underline;
 }
-
+.main div.navigation li a:active {
+    text-decoration: underline;
+}
 .main div.main-content {
     display: flex;
 }

@@ -1,11 +1,11 @@
 <template>
     <div>
             <div class="main-content">
-                <aside class="content-navigation">
+                <aside v-if="$slots.nav" class="content-navigation">
                     <slot  name="nav"></slot>
                    
                 </aside>
-                <section class="content-info">
+                <section v-if="$slots.info" class="content-info">
                    <slot name="info"></slot>
                 </section>
             </div>

@@ -3,7 +3,10 @@
         <div class="navigation">
                 <ul>
                     <li v-for="(item, index) in navItems" :key="item.id">
-                        <a @click="navItemClickHandler(index)">{{item.name}}</a>
+                        <a 
+                        :class ="{ active: index === selectedIndex}"
+                        @click="navItemClickHandler(index)"
+                        >{{item.name}}</a>
                         </li>
                    
                 </ul>
@@ -24,6 +27,10 @@ export default {
             type:Array,
             required:true
         }
+    },
+    selectedIndex:{
+        type:Number,
+        required:true
     },
     methods:{
         navItemClickHandler(index){
