@@ -4,8 +4,8 @@
   <div class="main">
     <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies" :selected-index="selectedIndex">
        </app-navigation>
-       <app-create-book :tehnologies="tutorials.technologies" :subjects="subjects"></app-create-book>
-       <!-- <app-register></app-register> -->
+      <!--  <app-create-book :tehnologies="tutorials.technologies" :subjects="subjects"></app-create-book> -->
+        <app-register></app-register>
     <!-- <app-login></app-login> -->
     <!-- <app-home :subjects="subjects"></app-home>  -->
   </div>
@@ -18,8 +18,8 @@ import tutorials from './tutorials.json';
 
 //import AppHome from './components/Home.vue'; 
 //import AppLogin from './components/Login.vue';
-import AppCreateBook from './components/CreateBook.vue';
-//import AppRegister from './components/Register.vue';
+//import AppCreateBook from './components/CreateBook.vue';
+import AppRegister from './components/Register.vue';
 import AppHeader from './components/core/Header.vue';
 import AppFooter from './components/core/Footer.vue';
 import AppNavigation from './components/core/Navigation.vue';
@@ -29,8 +29,8 @@ export default {
   components: {
     // AppHome,
     //AppLogin,
-    AppCreateBook,
-    //AppRegister,
+    //AppCreateBook,
+    AppRegister,
     AppHeader,
     AppFooter,
     AppNavigation
