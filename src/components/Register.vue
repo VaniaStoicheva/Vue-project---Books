@@ -8,7 +8,7 @@
       </ul>
     </template>
     <template v-slot:info>
-      <form action method="post">
+      <form @submit.prevent="submitHandler">
         <fieldset>
           <h1>Registration Form</h1>
 
@@ -25,11 +25,11 @@
               v-model="username"
               @blur="$v.username.$touch"
               class="error"
-              placeholder="Mark Ulrich"
+              placeholder="username"
             />
           </p>
 
-          <template v-if="$v.username.$errors">
+          <template v-if="$v.username.$error">
             <p v-if="!$v.username.required" class="error">Username is required!</p>
             <p v-else-if="!$v.username.username" class="error">Username is invalid!</p>
           </template>
@@ -40,8 +40,19 @@
                 <i class="fas fa-envelope"></i>
               </span>
             </label>
-            <input type="text" name="email" id="email" placeholder="marg@gmial.com" />
+            <input 
+            type="text" 
+            name="email" 
+            id="email" 
+            v-model="email"
+            @blur="$v.email.$touch"
+            placeholder="test@gmial.com" />
           </p>
+           <template v-if="$v.email.$error">
+            <p v-if="!$v.email.required" class="error">Email is required!</p>
+            <p v-else-if="!$v.email.email" class="error">Email is invalid!</p>
+          </template>
+
 
           <p class="field field-icon">
             <label for="tel">
@@ -52,16 +63,31 @@
             <select name="tel" id="tel" class="tel">
               <option value="1">+359</option>
             </select>
-            <input type="text" name="tel" id="tel" placeholder="888 888" />
+            <input 
+            type="text" 
+            name="tel" 
+            id="tel"
+            v-model="tel"
+            @blur="$v.tel.$touch" 
+            placeholder="888 888" />
           </p>
-
+          <template v-if="$v.tel.$error">
+            <p v-if="!$v.tel.required" class="error">Phonenumber is required!</p>
+            <p v-else-if="!$v.tel.phonenumber" class="error">Phonenumber is invalid!</p>
+          </template>
           <p class="field field-icon">
             <label for="building">
               <span>
                 <i class="fas fa-building"></i>
               </span>
             </label>
-            <select name="building" id="building" class="building">
+            <select 
+            name="building" 
+            id="building" 
+            class="building"
+             @change="$v.building.$touch"
+            v-model="building">
+              <option :value="null">Select....</option>
               <option value="1">Designer</option>
               <option value="2">Software Engineer</option>
               <option value="3">Accountant</option>
@@ -69,6 +95,9 @@
               <option value="5">Other</option>
             </select>
           </p>
+          <template v-if="$v.building.$error">
+          <p v-if="!$v.building.required" class="error">Building is required!</p>
+          </template>
 
           <p class="field field-icon">
             <label for="password">
@@ -76,8 +105,22 @@
                 <i class="fas fa-lock"></i>
               </span>
             </label>
-            <input type="password" name="password" id="password" placeholder="******" />
+            <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            placeholder="******"
+            v-model="password"
+            @blur="$v.password.$touch"  />
           </p>
+          <template v-if="$v.password.$error">
+          <p v-if="!$v.password.required" class="error">Password is required!</p>
+          <p
+            v-else-if="!$v.password.minLength || !$v.password.maxLenght"
+            class="error"
+          >Password should be between 3 and 16 symbols!</p>
+          <p v-else-if="!$v.password.alphanumeric" class="error">Password should match [0-9A-Za-z]!</p>
+        </template>
 
           <p class="field field-icon">
             <label for="re-password">
@@ -85,8 +128,18 @@
                 <i class="fas fa-lock"></i>
               </span>
             </label>
-            <input type="re-password" name="re-password" id="re-password" placeholder="******" />
+            <input 
+            type="re-password" 
+            name="re-password" 
+            id="re-password" 
+            placeholder="******"
+             v-model="rePassword"
+            @blur="$v.rePassword.$touch"
+             />
           </p>
+          <template v-if="$v.rePassword.$error">
+          <p v-if="!$v.rePassword.sameAs" class="error">Repeat Password does not match password!</p>
+        </template>
 
           <p>
             <button>Create Account</button>
@@ -104,7 +157,7 @@
  
 <script>
 import AppContent from "./shared/Content.vue";
-import { vuelidateMixin } from "vuelidate";
+import { validationMixin } from 'vuelidate';
 import {
   required,
   email,
@@ -134,7 +187,7 @@ export default {
   components: {
     AppContent
   },
-  mixins: [vuelidateMixin],
+  mixins: [validationMixin],
   data() {
     return {
       username: "",
@@ -169,6 +222,12 @@ export default {
     },
     rePassword: {
       sameAs: sameAs("password")
+    }
+  },
+  methods:{
+    submitHandler(){
+      this.$v.$touch();
+      if(this.$v.$error){return; }
     }
   }
 };
