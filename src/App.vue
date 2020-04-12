@@ -2,13 +2,22 @@
   <div id="app">
   <app-header></app-header>
   <div class="main">
-    <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies" :selected-index="selectedIndex">
-       </app-navigation>
+     <app-navigation>
+        <!--  <router-link to="/home">Home</router-link>
+          <router-link to="/register">Register</router-link>
+          <router-link to="/login">Login</router-link>
+          <router-link to="/allBooks">AllBooks</router-link>
+          <router-link to="/create">Create book</router-link>
+          <router-link to="/detail">Detail book</router-link> -->
+    </app-navigation> 
+    <!-- <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies" :selected-index="selectedIndex">
+       </app-navigation> -->
       <!--  <app-create-book :tehnologies="tutorials.technologies" :subjects="subjects"></app-create-book> -->
-        <app-register></app-register>
+        <!-- <app-register></app-register> -->
     <!-- <app-login></app-login> -->
     <!-- <app-home :subjects="subjects"></app-home>  -->
   </div>
+  <!-- <router-view></router-view> -->
     <app-footer></app-footer>
   </div>
 </template>
@@ -16,10 +25,12 @@
 <script>
 import tutorials from './tutorials.json';
 
+
+
 //import AppHome from './components/Home.vue'; 
 //import AppLogin from './components/Login.vue';
 //import AppCreateBook from './components/CreateBook.vue';
-import AppRegister from './components/Register.vue';
+//import AppRegister from './components/Register.vue';
 import AppHeader from './components/core/Header.vue';
 import AppFooter from './components/core/Footer.vue';
 import AppNavigation from './components/core/Navigation.vue';
@@ -30,7 +41,7 @@ export default {
     // AppHome,
     //AppLogin,
     //AppCreateBook,
-    AppRegister,
+    //AppRegister,
     AppHeader,
     AppFooter,
     AppNavigation
