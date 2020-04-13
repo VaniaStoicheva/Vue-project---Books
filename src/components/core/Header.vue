@@ -1,9 +1,8 @@
 <template>
-    <div>
-        <header>
-            <section>
-                <button>
-                    <a href="https://softuni.bg">
+<header>
+<section>
+    <button>
+        <a href="https://softuni.bg">
                         <span>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-left"
                                 class="svg-inline--fa fa-arrow-left fa-w-14" role="img"
@@ -11,7 +10,7 @@
                                 <path fill="currentColor"
                                     d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" />
                             </svg>
-                            Back to SoftUni
+                            Back to Home
                         </span>
                     </a>
                 </button>
@@ -54,15 +53,63 @@
                 <img src="../../assets/logo2.png" alt />
             </section>
         </header>
-    </div>
+        
+   <!--  <div>
+        <div> -->
+        <!-- <div class="navigation"> -->
+           <!--  <ul>
+                <li>
+        <router-link to="/home">Home</router-link>
+          <router-link to="/register">Register</router-link>
+          <router-link to="/login">Login</router-link>
+          <router-link to="/allBooks">AllBooks</router-link>
+          <router-link to="/create">Create book</router-link>
+          <router-link to="/detail">Detail book</router-link>
+                </li>
+            </ul> -->
+                <!-- <ul>
+                    <li v-for="(item, index) in navItems" :key="item.id">
+                        <a 
+                        :class ="{ active: index === selectedIndex}"
+                        @click="navItemClickHandler(index)"
+                        >{{item.name}}</a>
+                        </li>
+                   
+                </ul>
+                <ul>
+                    <li>
+                        <a href="#">SUBJECT [+]</a>
+                    </li>
+                </ul>  -->
+           <!--  </div>
+           <router-view></router-view> 
+    </div> -->
+    
 </template>
 
 <script>
 export default {
+    props:{
+        navItems:{
+            type:Array,
+            required:true
+        }
+    },
+    selectedIndex:{
+        type:Number,
+        required:true
+    },
+    methods:{
+        navItemClickHandler(index){
+            this.$emit('navigate',index)
+        }
+    }
     
 }
 </script>
 
 <style scoped>
-
+li a {
+    cursor: pointer;
+}
 </style>

@@ -1,15 +1,9 @@
 <template>
     <app-content>
-        <template v-slot:nav>
-             <ul>
-                 <li v-for="(item,index) of subjects" :key="index">
-                     <a>{{item.name}}</a>
-                 </li>
-            </ul>
-        </template>
+       
         <template v-slot:info>
             <h2 class="user-links">
-                        <a class="active-route" href="login.html">Login</a> | <a href="register.html">Register</a>
+                    Login 
                     </h2>
 
                     <form class="user-form">

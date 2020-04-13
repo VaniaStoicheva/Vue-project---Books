@@ -1,36 +1,23 @@
 <template>
   <div id="app">
   <app-header></app-header>
-  <div class="main">
-     <app-navigation>
-        <!--  <router-link to="/home">Home</router-link>
-          <router-link to="/register">Register</router-link>
-          <router-link to="/login">Login</router-link>
-          <router-link to="/allBooks">AllBooks</router-link>
-          <router-link to="/create">Create book</router-link>
-          <router-link to="/detail">Detail book</router-link> -->
-    </app-navigation> 
-    <!-- <app-navigation @navigate="navigateHandler($event)" :navItems="tutorials.technologies" :selected-index="selectedIndex">
-       </app-navigation> -->
-      <!--  <app-create-book :tehnologies="tutorials.technologies" :subjects="subjects"></app-create-book> -->
-        <!-- <app-register></app-register> -->
-    <!-- <app-login></app-login> -->
-    <!-- <app-home :subjects="subjects"></app-home>  -->
+  
+  <div  class="main">
+    
+     <app-navigation></app-navigation>
+      <router-view></router-view>  
+    <div class="main-content">
+        <section class="content-info">
+        </section>
+        </div> 
   </div>
-  <!-- <router-view></router-view> -->
+  
     <app-footer></app-footer>
   </div>
+ 
 </template>
 
 <script>
-import tutorials from './tutorials.json';
-
-
-
-//import AppHome from './components/Home.vue'; 
-//import AppLogin from './components/Login.vue';
-//import AppCreateBook from './components/CreateBook.vue';
-//import AppRegister from './components/Register.vue';
 import AppHeader from './components/core/Header.vue';
 import AppFooter from './components/core/Footer.vue';
 import AppNavigation from './components/core/Navigation.vue';
@@ -38,15 +25,11 @@ import AppNavigation from './components/core/Navigation.vue';
 export default {
   name: 'App',
   components: {
-    // AppHome,
-    //AppLogin,
-    //AppCreateBook,
-    //AppRegister,
     AppHeader,
     AppFooter,
     AppNavigation
   },
-  data(){
+ /*  data(){
      return{
         tutorials,
         selectedTehnologyIndex:0
@@ -61,7 +44,7 @@ export default {
       subjects(){
           return this.tutorials.technologies[this.selectedTehnologyIndex].subjects;
       }
-  }
+  } */
 }
 </script>
 
@@ -80,7 +63,19 @@ body {
 }
 
 /** ************************************** **/
+p.error {
+  text-align: center;
+  background-color: #f8d7da;
+  padding: 8px;
+  border-radius: 3px;
+ display: flex;
+ 
+}
 
+input.error {
+  border-left-color: #a8413f;
+}
+/********************************************** */
 header {
     padding: 1em 2em;
     margin: 0;
@@ -159,7 +154,7 @@ header .social-icons a {
 
 /** ************************************** **/
 
-footer {
+/* footer {
     padding: 3em;
     background-color: #303440;
     color: white;
@@ -224,7 +219,7 @@ footer .svg-inline--fa {
     font-size: inherit;
     height: 1em;
     vertical-align: -0.125em;
-}
+} */
 
 /** ************************************** **/
 
@@ -404,7 +399,7 @@ div.form-group {
     margin-bottom: 1%;
 }
 
-div.form-group input, option, select {
+div.form-group input, option, select, textarea {
     font-size: 18px;
     padding: 1%;
     width: 25%;

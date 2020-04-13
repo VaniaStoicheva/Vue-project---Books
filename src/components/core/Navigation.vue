@@ -1,58 +1,76 @@
 <template>
-    <div>
-        <div class="navigation">
-            <ul>
-                <li>
-        <router-link to="/home">Home</router-link>
-          <router-link to="/register">Register</router-link>
-          <router-link to="/login">Login</router-link>
-          <router-link to="/allBooks">AllBooks</router-link>
-          <router-link to="/create">Create book</router-link>
-          <router-link to="/detail">Detail book</router-link>
-                </li>
-            </ul>
-                <!-- <ul>
-                    <li v-for="(item, index) in navItems" :key="item.id">
-                        <a 
-                        :class ="{ active: index === selectedIndex}"
-                        @click="navItemClickHandler(index)"
-                        >{{item.name}}</a>
-                        </li>
-                   
-                </ul>
-                <ul>
-                    <li>
-                        <a href="#">SUBJECT [+]</a>
-                    </li>
-                </ul>  -->
-            </div>
-           <router-view></router-view> 
-    </div>
+  <v-toolbar
+     color="blue lighten-3"
+    padless
+  >
+    <v-toolbar-title>Online Books</v-toolbar-title>
+
+    <v-divider
+     class="mx-4" 
+      inset
+      vertical
+    ></v-divider>
+
+    <span class="subheading">
+       <v-btn text> <router-link to="/home">Home</router-link></v-btn>
+       </span>
+
+    <v-spacer></v-spacer>
+
+    
+      <v-btn text>
+        <router-link to="/register">Register</router-link>
+      </v-btn>
+   
+
+      <v-divider
+        inset
+        vertical
+      ></v-divider>
+
+      <v-btn text>
+        <router-link to="/login">Login</router-link>
+      </v-btn>
+
+      <v-divider
+        inset
+        vertical
+      ></v-divider>
+
+      <v-btn text>
+        <router-link to="/allBooks">AllBooks</router-link>
+      </v-btn>
+
+      <v-divider
+        inset
+        vertical
+      ></v-divider>
+
+      <v-btn text>
+        <router-link to="/create">Create book</router-link>
+      </v-btn>
+
+      <v-divider
+        inset
+        vertical
+      ></v-divider>
+
+      <v-btn text>
+       <router-link to="/details">Detail book</router-link>
+      </v-btn>
+
+    
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  </v-toolbar>
+  
 </template>
 
 <script>
 export default {
-    props:{
-        navItems:{
-            type:Array,
-            required:true
-        }
-    },
-    selectedIndex:{
-        type:Number,
-        required:true
-    },
-    methods:{
-        navItemClickHandler(index){
-            this.$emit('navigate',index)
-        }
-    }
     
 }
 </script>
 
 <style scoped>
-li a {
-    cursor: pointer;
-}
+
 </style>
