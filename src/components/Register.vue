@@ -6,7 +6,7 @@
         Register
         </h2>
       
-      <form class="user-form"  @submit.prevent="submitHandler">
+      <form class="user-form" @submit.prevent="onSignUp">
         <div class="form-group">
           <img src="https://img.icons8.com/material-sharp/42/000000/user.png">
             <input
@@ -15,15 +15,17 @@
               id="username"
               v-model="username"
               @blur="$v.username.$touch"
-              class="error"
+             
               placeholder="username"
             />
-        
+        </div>
           <template v-if="$v.username.$error">
             <p v-if="!$v.username.required" class="error">Username is required!</p>
-            <p v-else-if="!$v.username.username" class="error">Username is invalid!</p>
+             <p  v-else-if="!$v.username.minLength || !$v.username.maxLenght"
+                class="error"
+              >Username should be between 3 and 16 symbols!</p>
           </template> 
-          </div>
+        
            
          <div class="form-group">
           <img src="https://img.icons8.com/material-sharp/42/000000/email.png">
@@ -49,11 +51,16 @@
             id="tel"
             v-model="tel"
             @blur="$v.tel.$touch" 
-            placeholder="888 888" />
+            placeholder="0888 888" />
           </div>
           <template v-if="$v.tel.$error">
             <p v-if="!$v.tel.required" class="error">Phonenumber is required!</p>
-            <p v-else-if="!$v.tel.phonenumber" class="error">Phonenumber is invalid!</p>
+             <p v-if="!$v.tel.numeric" class="error">Phonenumber must be only number!</p>
+             <p
+            v-else-if="!$v.tel.minLength || !$v.tel.maxLenght"
+            class="error"
+          >Phonenumber should be between 6 and 10 symbols!</p>
+           
           </template>
          
           <div class="form-group">
@@ -71,14 +78,14 @@
           <p
             v-else-if="!$v.password.minLength || !$v.password.maxLenght"
             class="error"
-          >Password should be between 3 and 16 symbols!</p>
+          >Password should be between 6 and 16 symbols!</p>
           <p v-else-if="!$v.password.alphanumeric" class="error">Password should match [0-9A-Za-z]!</p>
         </template>
 
            <div class="form-group">
           <img src="https://img.icons8.com/material-sharp/42/000000/password--v1.png">
             <input 
-            type="re-password" 
+            type="password" 
             name="re-password" 
             id="re-password" 
             placeholder="******"
@@ -107,6 +114,7 @@
 </template>
  
 <script>
+import authAxios from "./../axios-auth.js";
 import AppContent from "./shared/Content.vue";
 import { validationMixin } from 'vuelidate';
 import {
@@ -114,27 +122,15 @@ import {
   email,
   sameAs,
   minLength,
-  maxLength
+  maxLength,
+  numeric
 } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
 
 const alphanumeric = helpers.regex("alphanumeric", /^[a-zA-Z0-9]*$/);
-const phonenumber = helpers.regex("phonenumber", /^[0-9]{9}$/);
-
-function username(value) {
-  const valueArray = value.trim().split(" ");
-  if (valueArray.length > 2) {
-    return false;
-  }
-  return (
-    !!valueArray[0] &&
-    /[A-Z]/g.test(valueArray[0][0]) &&
-    !!valueArray[1] &&
-    /[A-Z]/g.test(valueArray[1][0])
-  );
-}
 
 export default {
+  name: "SignUp",
   components: {
     AppContent
   },
@@ -152,7 +148,8 @@ export default {
   validations: {
     username: {
       required,
-      username
+       minLength: minLength(3),
+      maxLenght: maxLength(16),
     },
     email: {
       required,
@@ -160,12 +157,14 @@ export default {
     },
     tel: {
       required,
-      phonenumber
+      numeric,
+      minLength: minLength(6),
+      maxLenght: maxLength(10),
     },
    
     password: {
       required,
-      minLength: minLength(3),
+      minLength: minLength(6),
       maxLenght: maxLength(16),
       alphanumeric
     },
@@ -173,10 +172,28 @@ export default {
       sameAs: sameAs("password")
     }
   },
-  methods:{
-    submitHandler(){
-      this.$v.$touch();
-      if(this.$v.$error){return; }
+ methods: {
+    onSignUp() {
+      const payload = {
+        email: this.email,
+        password: this.password,
+        returnSecureToken: true
+      };
+      // Project Settings -> Web API key
+      authAxios
+        .post(
+          "/accounts:signUp",
+          payload
+        )
+        .then(res => {
+          const { idToken, localId } = res.data;
+          localStorage.setItem('token', idToken);
+          localStorage.setItem('userId', localId);
+          this.$router.push('/');
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   }
 };

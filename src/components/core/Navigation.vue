@@ -12,13 +12,13 @@
     ></v-divider>
 
     <span class="subheading">
-       <v-btn text> <router-link to="/home">Home</router-link></v-btn>
+       <v-btn text> <router-link to="/">Home</router-link></v-btn>
        </span>
 
     <v-spacer></v-spacer>
 
     
-      <v-btn text>
+      <v-btn text v-if="!isAuth">
         <router-link to="/register">Register</router-link>
       </v-btn>
    
@@ -28,7 +28,7 @@
         vertical
       ></v-divider>
 
-      <v-btn text>
+      <v-btn text v-if="!isAuth">
         <router-link to="/login">Login</router-link>
       </v-btn>
 
@@ -37,26 +37,27 @@
         vertical
       ></v-divider>
 
-      <v-btn text>
-        <router-link to="/allBooks">AllBooks</router-link>
-      </v-btn>
+
+       <v-btn text v-if="isAuth"> 
+        <router-link  to="/create">Create book</router-link>
+      </v-btn> 
 
       <v-divider
         inset
         vertical
       ></v-divider>
 
-      <v-btn text>
-        <router-link to="/create">Create book</router-link>
-      </v-btn>
-
-      <v-divider
-        inset
-        vertical
-      ></v-divider>
-
-      <v-btn text>
+      <v-btn text v-if="isAuth">
        <router-link to="/details">Detail book</router-link>
+      </v-btn>
+
+      <v-divider
+        inset
+        vertical
+      ></v-divider>
+
+       <v-btn text v-if="isAuth">
+        <router-link to="/" @click="onLogout">Logout</router-link>
       </v-btn>
 
     
@@ -67,10 +68,22 @@
 
 <script>
 export default {
-    
+  props: {
+    isAuth: Boolean
+  },
+   methods: {
+    onLogout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      
+      this.$emit('onAuth', false);
+    }
+  }  
 }
 </script>
 
 <style scoped>
-
+v-btn::-webkit-scrollbar-track{
+  text-decoration: cornflowerblue;
+}
 </style>

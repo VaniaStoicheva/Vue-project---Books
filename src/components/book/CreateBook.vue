@@ -5,18 +5,29 @@
                     </h2>
                         <div class="form-group" >
                             <img src="https://img.icons8.com/material-sharp/42/000000/books.png">
-                            <input type="text" name="bookName" placeholder="Book name">
+                            <input type="text" name="bookName" id="bookName" placeholder="Book name"
+                             v-model="bookName"
+                            @blur="$v.bookName.$touch"
+                            >
                         </div>
                          <template v-if="$v.bookName.$error">
                             <p v-if="!$v.bookName.required" class="error">Book name is required!</p>
+                            <p v-else-if="!$v.bookName.minLength || !$v.bookName.maxLenght"
+                                 class="error"
+                            >Book name should be between 3 and 16 symbols!</p>
                         </template> 
 
                         <div class="form-group">
                             <img src="https://img.icons8.com/material-sharp/42/000000/user.png">
-                            <input type="text" name="author" placeholder="Book author">
+                            <input type="text" name="author" placeholder="Book author" id="author"
+                             v-model="author"
+                            @blur="$v.author.$touch">
                         </div>
                         <template v-if="$v.author.$error">
                             <p v-if="!$v.author.required" class="error">Author name is required!</p>
+                            <p v-else-if="!$v.author.minLength || !$v.author.maxLenght"
+                                    class="error"
+                                >Author name should be between 3 and 16 symbols!</p>
                         </template>
 
                         <div class="form-group">
@@ -37,35 +48,43 @@
                         </div>
                             <template v-if="$v.genre.$error">
                             <p v-if="!$v.genre.required" class="error">Genre for a book is required!</p>
-                            </template> 
+                            </template>  
 
                         <div class="form-group">
                             <img src="https://img.icons8.com/material-sharp/42/000000/picture.png">
-                        <input name="imgUrl" type="file" accept="image/*,.pdf" show-size label="File input" />
-                        </div>
-                        <template v-if="$v.imgUl.$error">
-                            <p v-if="!$v.imgUl.required" class="error">Image book  is required!</p>
-                        </template> 
-
+                        <input name="imgUrl"  accept="image/*,.pdf" placeholder="Image Url" id="imgUrl"
+                            v-model="imgUrl"
+                            @blur="$v.imgUrl.$touch"
+                         > </div>
+                        
+                         <template v-if="$v.imgUrl.$error">
+                            <p v-if="!$v.imgUrl.required" class="error">Image book  is required!</p>
+                            <p v-if="!$v.imgUrl.url" class="error">Image book  must be only URLs!</p>
+                        </template>  
+ 
                         <div class="form-group">
                             <img src="https://img.icons8.com/material-sharp/42/000000/text.png">
                             <textarea 
-                            name="description" placeholder="Book description">
+                            name="description" placeholder="Book description" id="description"
+                             v-model="description"
+                            @blur="$v.description.$touch">
                             </textarea>
                             </div>
                             <template v-if="$v.description.$error">
-                            <p v-if="!$v.description.required" class="error">Description name is required!</p>
+                            <p v-if="!$v.description.required" class="error">Description book is required!</p>
                             </template> 
-                        
+                         
 
-                        <div class="form-group">
+                         <div class="form-group">
                             <img src="https://img.icons8.com/material/42/000000/sale.png">
-                            <input type="number" name="price" placeholder="Price">
+                            <input type="number" name="price" placeholder="Price" id="price"
+                             v-model="price"
+                            @blur="$v.price.$touch">
                         </div>
                         <template v-if="$v.price.$error">
-                            <p v-if="!$v.price.required" class="error">Price is required!</p>
-                            </template> 
-                        <button >Add Book</button>
+                            <p v-if="!$v.price.required" class="error">Price book is required!</p>
+                            </template>  
+                        <button class="btn" @click="addBook">Add Book</button>
                     </form>
 </template>
 
@@ -74,45 +93,37 @@
 <script>
    
   import { validationMixin } from 'vuelidate'
-  import { required, maxLength } from 'vuelidate/lib/validators'
+  import { required, maxLength, minLength, url } from 'vuelidate/lib/validators'
+  import requester from '../../plugins/requester';
 
   export default {
       
-    mixins: [validationMixin],
+    mixins: [validationMixin, requester],
 
     validations: {
-      bookName: { required, maxLength: maxLength(10) },
-      author: { required,maxLength: maxLength(15) },
-       genre: { required },
+      bookName: { required, maxLength: maxLength(16), minLength:minLength(3) },
+      author: { required,maxLength: maxLength(16), minLength:minLength(3) },
+      genre: { required },
       select: { required },
       description:{required,maxLength: maxLength(200)},
-      imgUl:{required},
+      imgUrl:{required, url},
       price:{required}
       
     },
 
-    data: () => ({
-      bookName: '',
-      author: '',
-      select: null,
-      items: [
-        'Sci-fi',
-        'Fantasy',
-        'Drama',
-        'Other',
-      ],
-      description:'',
-      imgUl:'',
-      price:''
-    }),
+    data() {
+    return {
+      bookName: "",
+      author: "",
+      genre:"",
+      description:"",
+      imgUrl:"",
+      price:""
+    }
+    },
 
-    computed: {
-      checkboxErrors () {
-        const errors = []
-        if (!this.$v.checkbox.$dirty) return errors
-        !this.$v.checkbox.checked && errors.push('You must agree to continue!')
-        return errors
-      },
+    /* computed: {
+     
       selectErrors () {
         const errors = []
         if (!this.$v.select.$dirty) return errors
@@ -126,26 +137,24 @@
         !this.$v.name.required && errors.push('Name is required.')
         return errors
       },
-      emailErrors () {
-        const errors = []
-        if (!this.$v.email.$dirty) return errors
-        !this.$v.email.email && errors.push('Must be valid e-mail')
-        !this.$v.email.required && errors.push('E-mail is required')
-        return errors
-      },
-    },
+      
+    }, */
 
     methods: {
       submit () {
         this.$v.$touch()
+        if(this.$v.$error){return; }
       },
       clear () {
         this.$v.$reset()
         this.name = ''
         this.email = ''
-        this.select = null
-        this.checkbox = false
+        this.select = null 
       },
+      addBook(){
+          this.addBook()
+          this.$router.push('home')
+      }
     },
   }
 </script>
@@ -155,7 +164,10 @@ p.error {
   background-color: #f8d7da;
   padding: 8px;
   border-radius: 3px;
- display: flex;
+ display: inline-block;
+    vertical-align: middle;
+    width: 30%;
+    margin: 0 2%;
  
 }
 
@@ -189,7 +201,7 @@ button {
   border: none;
   border-radius: 3px;
   padding: 0.8em 1.2em;
-  width: 100%;
+  width: 10%;
 }
 
 i {

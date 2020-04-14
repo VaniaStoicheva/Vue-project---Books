@@ -4,8 +4,8 @@
   
   <div  class="main">
     
-     <app-navigation></app-navigation>
-      <router-view></router-view>  
+     <app-navigation @onAuth="isAuth = $event" :isAuth="isAuth"></app-navigation>
+      <router-view @onAuth="isAuth = $event" :isAuth="isAuth"></router-view>  
     <div class="main-content">
         <section class="content-info">
         </section>
@@ -23,28 +23,19 @@ import AppFooter from './components/core/Footer.vue';
 import AppNavigation from './components/core/Navigation.vue';
 
 export default {
+
   name: 'App',
+  data: function() {
+    return {
+      isAuth: localStorage.getItem('token') !== null
+    }
+  },
   components: {
     AppHeader,
     AppFooter,
     AppNavigation
   },
- /*  data(){
-     return{
-        tutorials,
-        selectedTehnologyIndex:0
-     } 
-  },
-  methods:{
-      navigateHandler(index){
-          this.selectedTehnologyIndex=index
-      }
-  },
-  computed:{
-      subjects(){
-          return this.tutorials.technologies[this.selectedTehnologyIndex].subjects;
-      }
-  } */
+ 
 }
 </script>
 
@@ -68,7 +59,11 @@ p.error {
   background-color: #f8d7da;
   padding: 8px;
   border-radius: 3px;
- display: flex;
+
+ display: inline-block;
+    vertical-align: middle;
+    width: 30%;
+    margin: 0 2%;
  
 }
 
