@@ -30,13 +30,7 @@ mode:'history',
   routes
 })
 
-/* const appTo={
-  meta:{
-    resources:{
-      books: LOCAL_RESOURCE
-    }
-  }
-} */
+
 
 new Vue({
   render: h => h(App),

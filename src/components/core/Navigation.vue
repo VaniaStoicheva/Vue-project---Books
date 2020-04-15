@@ -28,9 +28,7 @@
 
     <v-divider inset vertical></v-divider>
 
-    <v-btn text v-if="isAuth">
-      <router-link to="/details">Detail book</router-link>
-    </v-btn>
+    
 
     <v-divider inset vertical></v-divider>
 
@@ -38,7 +36,7 @@
       <a @click="onLogout">Logout</a>
     </v-btn>
 
-    <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+    
   </v-toolbar>
 </template>
 

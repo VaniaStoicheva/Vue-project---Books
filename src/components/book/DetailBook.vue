@@ -4,24 +4,26 @@
     max-width="344"
     class="mx-auto"
   > -->
+  <p v-for="(book,i) in books" :key="i.bookId">
+          
+      
     <v-list-item>
       <v-list-item-avatar color="grey"></v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title class="headline">Book Title</v-list-item-title>
+        <v-list-item-title class="headline">Book Title:{{book.name}}</v-list-item-title>
         <v-list-item-subtitle>Author book</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
 
     <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+      src=""
       height="194"
     ></v-img>
 
     <v-card-text>
-      Visit ten places on our planet that are undergoing the biggest changes today.
-      Description book
+      {{description}}
     </v-card-text>
-
+  </p>
     <v-card-actions>
       <v-btn
         text
@@ -45,6 +47,7 @@
     </v-card-actions>
   <!-- </v-card> -->
 </div>
+
 </template>
 <script>
 export default {

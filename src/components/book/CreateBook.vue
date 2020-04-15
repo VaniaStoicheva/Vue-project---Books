@@ -1,5 +1,6 @@
 <template>
-                    <form class="user-form" @submit="createBook" >
+                     <form class="user-form" @submit.prevent="createBook" > 
+                      
                          <h2 class="user-links">
                            [+]  Add new book   
                     </h2>
@@ -92,16 +93,14 @@
 
 <script>
 import axiosDb from '@/axios-database';
-  
-  import { validationMixin } from 'vuelidate'
-  import { required, maxLength, minLength, url } from 'vuelidate/lib/validators'
-  import requester from '../../plugins/requester';
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, minLength, url } from 'vuelidate/lib/validators'
 
-  export default {
-      
-    mixins: [validationMixin, requester],
 
-    validations: {
+
+export default {
+  mixins: [validationMixin],
+  validations: {
       bookName: { required, maxLength: maxLength(16), minLength:minLength(3) },
       author: { required,maxLength: maxLength(16), minLength:minLength(3) },
       genre: { required },
@@ -109,46 +108,40 @@ import axiosDb from '@/axios-database';
       description:{required,maxLength: maxLength(200)},
       imgUrl:{required, url},
       price:{required}
-      
+      },
+  data() {
+      return {
+        book:{
+          bookName:"",
+          author: "",
+          genre:"",
+          description:"",
+          imgUrl:"",
+          price:""   
+      }
+      };
     },
-
-    data() {
-    return {
-    book: [],
-    bookName:"",
-      author: "",
-      genre:"",
-      description:"",
-      imgUrl:"",
-      price:""     
-    }
-    },
-
-   
-    methods:{
-     createBook() {
+  methods:{
+     async  createBook() {
         const payload = {
-                    author:this.author,
-                    bookName:this.bookName,
-                    description:this.description,
-                    genre:this.genre,
-                    imgUrl:this.imgUrl,
-                    price:this.price
-                } ;
-                axiosDb
-                .post(
-                    "/books-vue-project:create",
-                    payload
-                ).then(res=>{
-                    console.log(res)
-                    this.$router.push('/')
-                })
-         
-                    
-                  
+              bookName: this.bookName,
+              author: this.author,
+              genre: this.genre,
+              description: this.description,
+              imgUrl: this.imgUrl,
+              price: this.price
+            };
+      
+     await axiosDb
+          .post('/books.json', payload).then(res => {
+              console.log(res)
+              this.$router.push("/");
+          })
+       }
+      
+  
     }
-  }
-  }
+}
 </script>
 <style scoped>
 p.error {
