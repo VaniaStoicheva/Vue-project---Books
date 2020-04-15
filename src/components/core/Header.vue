@@ -46,21 +46,7 @@
 
 <script>
 export default {
-   /*  props:{
-        navItems:{
-            type:Array,
-            required:true
-        }
-    },
-    selectedIndex:{
-        type:Number,
-        required:true
-    },
-    methods:{
-        navItemClickHandler(index){
-            this.$emit('navigate',index)
-        }
-    } */
+  
     
 }
 </script>

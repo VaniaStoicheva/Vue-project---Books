@@ -1,4 +1,4 @@
- <template>
+  <template>
   <v-footer
     color="primary lighten-1"
     padless
@@ -7,7 +7,7 @@
       justify="center"
       no-gutters
     >
-      <!-- <v-btn
+       <v-btn
         v-for="link in links"
         :key="link"
         color="white"
@@ -15,13 +15,13 @@
         rounded
         class="my-2"
       >
-        {{ link }}
-      </v-btn> -->
+       
+      </v-btn> 
       <v-col
         class="primary lighten-2 py-4 text-center white--text"
         cols="12"
       >
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        <strong>Copyright ©  {{ new Date().getFullYear() }} — Online Book </strong>
       </v-col>
     </v-row>
   </v-footer>
@@ -29,10 +29,7 @@
  
  
 <script>
- //import Home from '../Home.vue'
-/* import Register from '../Register.vue'
-import Login from '../Login.vue'
-import AllBooks from '../book/AllBook'  */
+ 
 
   export default {
     data: () => ({
@@ -40,7 +37,7 @@ import AllBooks from '../book/AllBook'  */
         'Home',
         'Register',
         'Login',
-        'AllBooks',
+        
         
       ],
     }),
@@ -49,4 +46,4 @@ import AllBooks from '../book/AllBook'  */
 
 <style scoped>
 
-</style>
+</style> 
