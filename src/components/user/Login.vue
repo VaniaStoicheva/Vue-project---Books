@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import authAxios from "@/axios-auth";
-import AppContent from './shared/Content.vue';
+import authAxios from "../../axios-auth.js";
+import AppContent from '../shared/Content.vue';
 import { validationMixin } from 'vuelidate';
 import {
     email,

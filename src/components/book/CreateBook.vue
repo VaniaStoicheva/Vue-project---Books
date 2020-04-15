@@ -1,5 +1,5 @@
 <template>
-                    <form class="user-form"  @submit.prevent="submit">
+                    <form class="user-form" @submit="createBook" >
                          <h2 class="user-links">
                            [+]  Add new book   
                     </h2>
@@ -28,6 +28,7 @@
                             <p v-else-if="!$v.author.minLength || !$v.author.maxLenght"
                                     class="error"
                                 >Author name should be between 3 and 16 symbols!</p>
+                                {{author}}
                         </template>
 
                         <div class="form-group">
@@ -39,11 +40,10 @@
                                 @change="$v.genre.$touch"
                                 v-model="genre">
                                 <option :value="null">Select....</option>
-                                <option value="1">Si-fi</option>
-                                <option value="2">Fantasy</option>
-                                <option value="3">Crime</option>
-                                <option value="4">Drama</option>
-                                <option value="5">Other</option>
+                                <option value="fantasy">Fantasy</option>
+                                <option value="crime">Crime</option>
+                                <option value="drama">Drama</option>
+                                <option value="other">Other</option>
                                 </select>
                         </div>
                             <template v-if="$v.genre.$error">
@@ -84,14 +84,15 @@
                         <template v-if="$v.price.$error">
                             <p v-if="!$v.price.required" class="error">Price book is required!</p>
                             </template>  
-                        <button class="btn" @click="addBook">Add Book</button>
+                        <button class="btn"  >Add Book</button>
                     </form>
 </template>
 
 
 
 <script>
-   
+import axiosDb from '@/axios-database';
+  
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, minLength, url } from 'vuelidate/lib/validators'
   import requester from '../../plugins/requester';
@@ -113,49 +114,40 @@
 
     data() {
     return {
-      bookName: "",
+    book: [],
+    bookName:"",
       author: "",
       genre:"",
       description:"",
       imgUrl:"",
-      price:""
+      price:""     
     }
     },
 
-    /* computed: {
-     
-      selectErrors () {
-        const errors = []
-        if (!this.$v.select.$dirty) return errors
-        !this.$v.select.required && errors.push('Item is required')
-        return errors
-      },
-      nameErrors () {
-        const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
-        return errors
-      },
-      
-    }, */
-
-    methods: {
-      submit () {
-        this.$v.$touch()
-        if(this.$v.$error){return; }
-      },
-      clear () {
-        this.$v.$reset()
-        this.name = ''
-        this.email = ''
-        this.select = null 
-      },
-      addBook(){
-          this.addBook()
-          this.$router.push('home')
-      }
-    },
+   
+    methods:{
+     createBook() {
+        const payload = {
+                    author:this.author,
+                    bookName:this.bookName,
+                    description:this.description,
+                    genre:this.genre,
+                    imgUrl:this.imgUrl,
+                    price:this.price
+                } ;
+                axiosDb
+                .post(
+                    "/books:create",
+                    payload
+                ).then(res=>{
+                    console.log(res)
+                    this.$router.push('/')
+                })
+         
+                    
+                  
+    }
+  }
   }
 </script>
 <style scoped>

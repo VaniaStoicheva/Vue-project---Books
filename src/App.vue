@@ -23,18 +23,17 @@ import AppFooter from './components/core/Footer.vue';
 import AppNavigation from './components/core/Navigation.vue';
 
 export default {
-
   name: 'App',
   data: function() {
     return {
       isAuth: localStorage.getItem('token') !== null
     }
-  },
+    },
   components: {
     AppHeader,
     AppFooter,
     AppNavigation
-  },
+  }
  
 }
 </script>
@@ -92,7 +91,7 @@ header section:nth-child(2) {
 }
 
 header section:nth-child(2) img {
-    width: 28%;
+    width: 30%;
     max-width: 100%;
     padding: 0 3em;
     vertical-align: middle;
@@ -127,7 +126,7 @@ header .svg-inline--fa {
 
 header .social-icons {
     transform: translate(-50%, -50%);
-    text-align: right;
+    text-align: left;
     display: inline;
     vertical-align: bottom;
 }

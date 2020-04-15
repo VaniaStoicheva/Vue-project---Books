@@ -21,6 +21,18 @@ export default {
             } catch(err) {
                 console.log(err);
             }
-        }
+        },
+
+        /* async createBook(book) {
+            try {
+                console.log(book)
+                //const body = JSON.stringify(book);
+                const response = await axiosDb.post(book).map(res => res.json());
+                return response;
+                
+            } catch(err) {
+                console.log(err);
+            } 
+        } */
     }
 }

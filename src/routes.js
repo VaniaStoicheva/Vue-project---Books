@@ -1,9 +1,10 @@
 import Home from './components/Home.vue';
-import Register from './components/Register.vue';
-import Login from './components/Login.vue';
+import Register from './components/user/Register.vue';
+import Login from './components/user/Login.vue';
 import CreateBook from './components/book/CreateBook.vue';
 import DetailBook from './components/book/DetailBook.vue';
-import NotFound from './components/NotFound.vue';
+import NotFound from './components/core/NotFound.vue';
+
 
 
 export default [

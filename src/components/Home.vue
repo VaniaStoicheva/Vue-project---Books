@@ -2,8 +2,8 @@
 
  <div v-if="isAuth">
         Hello to the Page (authenticated)
-        <p v-for="book in books" :key="book.bookId">
-          {{book.bookName}}
+        <p v-for="book in books" :key="book">
+          {{bookName}}
         </p>
 
       
@@ -11,7 +11,7 @@
 
   <v-container class="pa-4 text-center">
     <v-row class="fill-height" align="center" justify="center">
-      <template v-for="(item, i) in items">
+      <template v-for="(book, i) in books" >
         <v-col
           :key="i"
           cols="12"
@@ -23,7 +23,7 @@
               :class="{ 'on-hover': hover }"
             >
               <v-img
-                :src="item.img"
+                :src="book.imgUrl"
                 height="225px"
               >
                 <v-card-title class="title white--text">
@@ -31,14 +31,23 @@
                     class="fill-height flex-column"
                     justify="space-between"
                   >
-                    <p class="mt-4 subheading text-left">{{ item.title }}</p>
+                    <p class="mt-4 subheading text-left">{{ book.bookName }}</p>
 
                     <div>
                       <p class="ma-0 body-1 font-weight-bold font-italic text-left">
-                        {{ item.text }}
+                        {{ book.bookName }}
                       </p>
                       <p class="caption font-weight-medium font-italic text-left">
-                        {{ item.subtext }}
+                        {{ book.author }}
+                      </p>
+                      <p class="caption font-weight-medium font-italic text-left">
+                        {{ book.genre }}
+                      </p>
+                      <p class="caption font-weight-medium font-italic text-left">
+                        {{ book.description }}
+                      </p>
+                      <p class="caption font-weight-medium font-italic text-left">
+                        {{ book.price }}
                       </p>
                     </div>
 
@@ -55,6 +64,7 @@
                           color="transparent"
                         >
                           {{ icon }}
+                          {{bookName}}
                         </v-icon>
                       </v-btn>
                     </div>
@@ -77,15 +87,24 @@
 
 <script>
 import booksMixin from '../mixins/books-mixin';
+import axiosDb from '@/axios-database';
 
   export default {
        props: {
             isAuth: Boolean
         },
     data: () => ({
-        books:[],
+       
+        books:[{
+    bookName:"",
+      author: "",
+      genre:"",
+      description:"",
+      imgUrl:"",
+      price:""  
+         } ],
       icons: ['mdi-rewind', 'mdi-play', 'mdi-fast-forward'],
-      items: [
+      /* items: [
         {
           title: 'New Releases',
           text: "It's New Release Friday",
@@ -104,7 +123,7 @@ import booksMixin from '../mixins/books-mixin';
           subtext: 'Chill beats to mellow you out.',
           img: 'http://lorempixel.com/output/abstract-q-c-640-480-6.jpg',
         },
-      ],
+      ], */
       transparent: 'rgba(255, 255, 255, 0)',
     }),
     name: 'Home',
@@ -113,7 +132,25 @@ import booksMixin from '../mixins/books-mixin';
   },
   created() {
     this.getAllBooks()
+ 
   },
+   methods: {
+        async getAllBooks() {
+            try {
+                const res = await axiosDb.get(`bookName.json`);
+                const allBooksRes = res.data;
+                console.log(allBooksRes)
+                for (const bookId in allBooksRes) {
+                  this.books.push({
+                    bookId,
+                    ...allBooksRes[bookId]
+                  });
+                }
+            } catch(err) {
+                console.log(err);
+            }
+        }
+        },
   mixins: [booksMixin]
   }
 </script>

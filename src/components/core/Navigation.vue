@@ -11,10 +11,9 @@
       vertical
     ></v-divider>
 
-    <span class="subheading">
+    
        <v-btn text> <router-link to="/">Home</router-link></v-btn>
-       </span>
-
+      
    <v-spacer></v-spacer>
     
       <v-btn text v-if="!isAuth">
