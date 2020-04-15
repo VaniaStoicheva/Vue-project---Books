@@ -7,11 +7,18 @@ import NotFound from './components/core/NotFound.vue';
 
 
 
+
 export default [
-{path:'/', component:Home},
+{
+    path:'/',
+     component:Home,
+    },
 {path:'/register', component:Register},
 {path:'/login', component:Login},
 {path:'/create', component:CreateBook},
 {path:'/details', component:DetailBook},
 {path:'*', component:NotFound},
 ]
+
+
+ 

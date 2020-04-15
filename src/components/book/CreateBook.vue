@@ -137,7 +137,7 @@ import axiosDb from '@/axios-database';
                 } ;
                 axiosDb
                 .post(
-                    "/books:create",
+                    "/books-vue-project:create",
                     payload
                 ).then(res=>{
                     console.log(res)

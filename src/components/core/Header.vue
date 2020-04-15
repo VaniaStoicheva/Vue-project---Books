@@ -52,7 +52,5 @@ export default {
 </script>
 
 <style scoped>
-li a {
-    cursor: pointer;
-}
+
 </style>
