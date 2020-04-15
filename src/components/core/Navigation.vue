@@ -15,19 +15,16 @@
        <v-btn text> <router-link to="/">Home</router-link></v-btn>
        </span>
 
-    <v-spacer></v-spacer>
-
+   <v-spacer></v-spacer>
     
       <v-btn text v-if="!isAuth">
         <router-link to="/register">Register</router-link>
       </v-btn>
    
-
       <v-divider
         inset
         vertical
       ></v-divider>
-
       <v-btn text v-if="!isAuth">
         <router-link to="/login">Login</router-link>
       </v-btn>
