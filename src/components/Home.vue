@@ -31,18 +31,13 @@
                     </v-row>
                 </v-img>
                      
-                 
-
                  <div class="align-self-center">
                         <v-btn
                        v-if="!isAuth"
                          :class="{ 'show-btns': hover }"
                           color="transparent"
-                         
                           >
-                         
                       <router-link to="/login">Login or Register to vue  more...</router-link>
-                       
                         </v-btn>
                   </div>
 
@@ -59,18 +54,20 @@
                         </p>
                </div>
 
-                <div class="align-self-center">
-                  <router-link v-bind:to="'/details/'+ book.id" >Details</router-link>
+ 
+                 <div class="align-self-center">
+                 
+                        
+                       <!-- 
+                         <router-link v-bind:to="'/details/'+ book.id" >Details</router-link>
                         <v-btn
                        v-if="isAuth"
                          :class="{ 'show-btns': hover }"
                           color="transparent"
-                         
                           >
-                         
                           Delete book
-                        </v-btn>
-                  </div>
+                        </v-btn>-->
+                  </div> 
 
 
               </v-card>
@@ -124,7 +121,7 @@ export default {
                
             }).then(function(data){
                 this.book=data
-               console.log(this.id)
+               console.log(data)
             })
            } 
     

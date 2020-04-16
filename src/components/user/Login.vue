@@ -39,8 +39,15 @@
                             >Password should be between 3 and 16 symbols!</p>
                             <p v-else-if="!$v.password.alphanumeric" class="error">Password should match [0-9A-Za-z]!</p>
                         </template>
-
+                        <template v-if="$v.$error">
+                            <p class="error">You do not have an account!</p> 
+                        </template>
                         <button class="btn">Login</button>
+
+                        <p class="text-center">
+            You do not have an account?
+            <a href='/register'>Register</a>
+          </p>
                     </form>
             </template>
     </app-content>
@@ -105,6 +112,7 @@ export default {
         })
         .catch(err => {
           console.error(err);
+
         });
     }
   }

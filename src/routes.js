@@ -8,11 +8,12 @@ import CreateBook from './components/book/CreateBook.vue';
 import DetailBook from './components/book/DetailBook.vue';
 import NotFound from './components/core/NotFound.vue';
 
-/* const Book = {
+ /* const Book = {
     props: ['id'],
     template: '<div>Book {{ id }}</div>'
-  } */
-  
+  }  */
+  //const id=this.$route.params.id;
+
 Vue.use(VueRouter);
 
 function anonymousGuard(to, from, next) {

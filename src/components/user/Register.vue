@@ -103,7 +103,7 @@
 
           <p class="text-center">
             Have an account?
-            <a href>Log In</a>
+            <a href='login'>Log In</a>
           </p>
         
        
