@@ -1,10 +1,12 @@
 import axiosDb from '@/axios-database';
-import firebase from 'firebase'
+
 
 export default {
     data: function() {
         return { 
-            books: []
+            books: [],
+            id:this.$route.params.id ,
+           book:{}
          }
     },
     methods: {
@@ -12,7 +14,7 @@ export default {
             try {
                 const res = await axiosDb.get(`books.json`);
                 const allBooksRes = res.data;
-                console.log(allBooksRes)
+                //console.log(allBooksRes)
                 for (const bookId in allBooksRes) {
                   this.books.push({
                     bookId,
@@ -24,26 +26,32 @@ export default {
             }
         },
 
-        writeNewBook( bookName,author,genre,description,imgUrl,price )   {
-            // A post entry.
-            var bookData = {
-                bookName:bookName,
-                author:author,
-                genre:genre,
-                description:description,
-                imgUrl:imgUrl,
-                price:price   
-            };
+        async  deleteBook() {
+            const payload = {
+                  bookName: '',
+                  author: '',
+                  genre: '',
+                  description: '',
+                  imgUrl: '',
+                  price: ''
+                };
           
-            // Get a key for a new Post.
-            var newBookKey = firebase.database().ref().child('books').push().key;
-          
-            // Write the new post's data simultaneously in the posts list and the user's post list.
-            var updates = {};
-            updates['/books/' + newBookKey] = bookData;
-            updates['/books-user/' + localStorage.getItem('token') + '/' + newBookKey] = bookData;
-          
-            return firebase.database().ref().update(updates);
-          }
+         await axiosDb
+              .delete('/books.json', payload).then(res => {
+                console.log(res)
+                  console.log('Book deleted!')
+                  this.$router.push("/");
+              })
+           },
+
+            async getBookById(){
+            axiosDb.get('/books/'+ this.id +'.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+                this.book=data
+            })
+           } 
+           
+      
     }
 }

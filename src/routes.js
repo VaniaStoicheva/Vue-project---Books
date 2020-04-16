@@ -26,6 +26,7 @@ function anonymousGuard(to, from, next) {
 
 export default [
 {path:'/',component:Home},
+{path:'/home',component:Home},
 {path:'/register', component:Register, beforeEnter: anonymousGuard},
 {path:'/login', component:Login, beforeEnter: anonymousGuard},
 {path:'/create', component:CreateBook},

@@ -10,13 +10,18 @@
                 <v-card-title class="title white--text">
                   <div>
                         <p class="ma-0 body-1 font-weight-bold font-italic text-left">
-                          <label>Title:</label>
+                          <label>Заглавие:</label>
                         {{ book.bookName }}
                         </p>
                         <p class="caption font-weight-medium font-italic text-left">
-                        <label>Author:</label>
+                        <label>Автор:</label>
                           {{ book.author }}
                         </p>
+                        <p class="caption font-weight-medium font-italic text-left">
+                        <label>Жанр:</label>
+                          {{ book.genre }}
+                        </p>
+                        
                         </div>
                  </v-card-title>
                 
@@ -30,26 +35,43 @@
 
                  <div class="align-self-center">
                         <v-btn
-                        v-if="!isAuth"
+                       v-if="!isAuth"
                          :class="{ 'show-btns': hover }"
                           color="transparent"
-                          @click="getBookById"
+                         
                           >
                          
-                          Read more...
+                      <router-link to="/login">Login or Register to vue  more...</router-link>
+                       
                         </v-btn>
                   </div>
+
+                  
                <div v-if=isAuth>
                   <p class="ma-0 body-1 font-weight-bold font-italic text-left">
-                          <label>Desription:</label>
+                          <span>Резюме: </span>
                         {{ book.description }}
                         </p>
                          <v-spacer></v-spacer>
                         <p class="caption font-weight-medium font-italic text-left">
-                        <label>Price:</label>
+                        <label class="label">Цена:</label>
                           {{ book.price }}
                         </p>
                </div>
+
+                <div class="align-self-center">
+                  <router-link v-bind:to="'/details/'+ book.id" >Details</router-link>
+                        <v-btn
+                       v-if="isAuth"
+                         :class="{ 'show-btns': hover }"
+                          color="transparent"
+                         
+                          >
+                         
+                          Delete book
+                        </v-btn>
+                  </div>
+
 
               </v-card>
             </v-hover>
@@ -64,37 +86,58 @@
 </template>
 
 <script>
+import axiosDb from '@/axios-database';
 import booksMixin from "../mixins/books-mixin";
-
-
+ 
 export default {
+   mixins: [booksMixin],
+
   props: {
-    isAuth: Boolean
+    isAuth: Boolean,
+    
+    
   },
+
    data: function() {
         return { 
             books: [],
-            transparent: "rgba(255, 255, 255, 0)",
+            id:this.$route.params.id,
+            book:{}
          }
     },
- 
-  transparent: "rgba(255, 255, 255, 0)",
-  
+
   name: 'Home',
+  
   beforeCreate() {
     this.$emit('onAuth', localStorage.getItem('token') !== null);
   },
+  
   created() {
   this.getAllBooks()
-  },  
+  }, 
+
   methods:{
-    getBookById(){
-      const id= this.$route.params.id 
-     console.log(id)
+    async getBookById(){
+            axiosDb.get('/books/'+ this.id +'.json').then(function(data){
+                 console.log(data)
+                return data.json();
+               
+            }).then(function(data){
+                this.book=data
+               console.log(this.id)
+            })
+           } 
+    
+  },
+  computed: {
+    getId() {
+    
+      const id=this.$route.params.id
+      console.log(id)
+      return id;
     }
   },
-  mixins: [booksMixin]
-};
+}
 </script>
 
 <style scoped>
