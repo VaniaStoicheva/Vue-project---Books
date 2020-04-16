@@ -44,12 +44,12 @@
                   
                <div v-if=isAuth>
                   <p class="ma-0 body-1 font-weight-bold font-italic text-left">
-                          <span>Резюме: </span>
+                          <strong><h4>Резюме:</h4></strong>
                         {{ book.description }}
                         </p>
                          <v-spacer></v-spacer>
                         <p class="caption font-weight-medium font-italic text-left">
-                        <label class="label">Цена:</label>
+                       <strong>Цена: </strong>
                           {{ book.price }}
                         </p>
                </div>
@@ -83,16 +83,13 @@
 </template>
 
 <script>
-import axiosDb from '@/axios-database';
 import booksMixin from "../mixins/books-mixin";
  
 export default {
    mixins: [booksMixin],
 
   props: {
-    isAuth: Boolean,
-    
-    
+    isAuth: Boolean, 
   },
 
    data: function() {
@@ -111,29 +108,7 @@ export default {
   
   created() {
   this.getAllBooks()
-  }, 
-
-  methods:{
-    async getBookById(){
-            axiosDb.get('/books/'+ this.id +'.json').then(function(data){
-                 console.log(data)
-                return data.json();
-               
-            }).then(function(data){
-                this.book=data
-               console.log(data)
-            })
-           } 
-    
-  },
-  computed: {
-    getId() {
-    
-      const id=this.$route.params.id
-      console.log(id)
-      return id;
-    }
-  },
+  }
 }
 </script>
 

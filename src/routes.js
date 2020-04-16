@@ -8,12 +8,7 @@ import CreateBook from './components/book/CreateBook.vue';
 import DetailBook from './components/book/DetailBook.vue';
 import NotFound from './components/core/NotFound.vue';
 
- /* const Book = {
-    props: ['id'],
-    template: '<div>Book {{ id }}</div>'
-  }  */
-  //const id=this.$route.params.id;
-
+ 
 Vue.use(VueRouter);
 
 function anonymousGuard(to, from, next) {
@@ -30,13 +25,8 @@ export default [
 {path:'/home',component:Home},
 {path:'/register', component:Register, beforeEnter: anonymousGuard},
 {path:'/login', component:Login, beforeEnter: anonymousGuard},
-{path:'/create', component:CreateBook},
+{path:'/create', component:CreateBook, beforeEnter: anonymousGuard},
 {path:'/details:id', component:DetailBook, props:true},
 {path:'*', component:NotFound},
 ]
 
-/* export default new VueRouter({
-    mode: 'history',
-    routes
-});
-  */

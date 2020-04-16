@@ -4,13 +4,12 @@ import App from './App.vue'
 import routes from './routes.js'
 import vuetify from '@/plugins/vuetify'
 import axios from 'axios';
-import databaseMixin from './mixins/database-mixin';
-//import { LOCAL_RESOURCE } from './constants'
+
 
 const baseURL= 'https://books-vue-project.firebaseio.com/'
 
 Vue.use(VueRouter)
-Vue.mixin(databaseMixin)
+
 
 Vue.config.productionTip = false
 
