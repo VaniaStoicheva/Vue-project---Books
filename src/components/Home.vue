@@ -10,7 +10,7 @@
                 <v-card-title class="title white--text">
                   <div>
                         <p class="ma-0 body-1 font-weight-bold font-italic text-left">
-                          <label>Заглавие:</label>
+                          <label>Заглавие  :</label>
                         {{ book.bookName }}
                         </p>
                         <p class="caption font-weight-medium font-italic text-left">
